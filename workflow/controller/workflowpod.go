@@ -834,6 +834,9 @@ func (woc *wfOperationCtx) addArchiveLocation(pod *apiv1.Pod, tmpl *wfv1.Templat
 			break
 		}
 	}
+	if woc.artifactRepository.AutoArchiveLogs != nil && *woc.artifactRepository.AutoArchiveLogs {
+		needLocation = true
+	}
 	if !needLocation {
 		woc.log.Debugf("archive location unnecessary")
 		return nil
