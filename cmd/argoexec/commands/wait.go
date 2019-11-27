@@ -9,20 +9,25 @@ import (
 )
 
 func NewWaitCommand() *cobra.Command {
+	var captureStderr bool
+
 	var command = cobra.Command{
 		Use:   "wait",
 		Short: "wait for main container to finish and save artifacts",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := waitContainer()
+			err := waitContainer(captureStderr)
 			if err != nil {
 				log.Fatalf("%+v", err)
 			}
 		},
 	}
+
+	command.PersistentFlags().BoolVarP(&captureStderr, "capture-stderr", "c", false, "capture stdout and stderr")
+
 	return &command
 }
 
-func waitContainer() error {
+func waitContainer(captureStderr bool) error {
 	wfExecutor := initExecutor()
 	defer wfExecutor.HandleError()
 	defer stats.LogStats()
@@ -62,7 +67,7 @@ func waitContainer() error {
 		return err
 	}
 	// Capture output script result
-	err = wfExecutor.CaptureScriptResult()
+	err = wfExecutor.CaptureScriptResult(captureStderr)
 	if err != nil {
 		wfExecutor.AddError(err)
 		return err

@@ -746,8 +746,8 @@ func (we *WorkflowExecutor) GetMainContainerID() (string, error) {
 	return we.mainContainerID, nil
 }
 
-// CaptureScriptResult will add the stdout of a script template as output result
-func (we *WorkflowExecutor) CaptureScriptResult() error {
+// CaptureScriptResult will add the stdout (and optionally stderr) of a script template as output result
+func (we *WorkflowExecutor) CaptureScriptResult(combinedOutput bool) error {
 
 	if we.ExecutionControl == nil || !we.ExecutionControl.IncludeScriptOutput {
 		log.Infof("No Script output reference in workflow. Capturing script output ignored")
@@ -761,7 +761,7 @@ func (we *WorkflowExecutor) CaptureScriptResult() error {
 	if err != nil {
 		return err
 	}
-	reader, err := we.RuntimeExecutor.GetOutputStream(mainContainerID, false)
+	reader, err := we.RuntimeExecutor.GetOutputStream(mainContainerID, combinedOutput)
 	if err != nil {
 		return err
 	}

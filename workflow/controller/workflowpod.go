@@ -317,7 +317,7 @@ func (woc *wfOperationCtx) newInitContainer(tmpl *wfv1.Template) apiv1.Container
 
 func (woc *wfOperationCtx) newWaitContainer(tmpl *wfv1.Template) (*apiv1.Container, error) {
 	ctr := woc.newExecContainer(common.WaitContainerName, tmpl)
-	ctr.Command = []string{"argoexec", "wait"}
+	ctr.Command = []string{"argoexec", "wait", "--capture-stderr"}
 	switch woc.controller.Config.ContainerRuntimeExecutor {
 	case common.ContainerRuntimeExecutorPNS:
 		ctr.SecurityContext = &apiv1.SecurityContext{
