@@ -236,6 +236,11 @@ type WorkflowSpec struct {
 	// +optional
 	SecurityContext *apiv1.PodSecurityContext `json:"securityContext,omitempty"`
 
+	// RuntimeClassName selects the container runtime configuration name used to run a Pod’s containers.
+	// Optional: Defaults to empty.  See type description for default values of each field.
+	// +optional
+	RuntimeClassName *string `json:"runtimeClassName,omitempty" protobuf:"bytes,29,opt,name=runtimeClassName"`
+
 	// PodSpecPatch holds strategic merge patch to apply against the pod spec. Allows parameterization of
 	// container fields which are not strings (e.g. resource limits).
 	PodSpecPatch string `json:"podSpecPatch,omitempty"`
@@ -368,6 +373,11 @@ type Template struct {
 	// Optional: Defaults to empty.  See type description for default values of each field.
 	// +optional
 	SecurityContext *apiv1.PodSecurityContext `json:"securityContext,omitempty"`
+
+	// RuntimeClassName selects the container runtime configuration name used to run a Pod’s containers.
+	// Optional: Defaults to empty.  See type description for default values of each field.
+	// +optional
+	RuntimeClassName *string `json:"runtimeClassName,omitempty" protobuf:"bytes,29,opt,name=runtimeClassName"`
 
 	// PodSpecPatch holds strategic merge patch to apply against the pod spec. Allows parameterization of
 	// container fields which are not strings (e.g. resource limits).
